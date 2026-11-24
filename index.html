@@ -96,7 +96,7 @@ var k=dk(now),a=S.r[k]||[],m=M[cm],w="",n=a.filter(Boolean).length;
 for(var i=6;i>=0;i--){var d=new Date();d.setDate(d.getDate()-i);var c=(S.r[dk(d)]||[]).filter(Boolean).length;
 w+='<div class="day">'+"dlmmjvs".charAt(d.getDay()===0?0:d.getDay())+'<div class="dot'+(ok(dk(d))?" ok":"")+(i===0?" now":"")+'">'+(c||"")+'</div></div>'}
 var dn=["dimanche","lundi","mardi","mercredi","jeudi","vendredi","samedi"][now.getDay()];
-var h='<p class="mut">'+dn+" "+now.getDate()+" "+["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"][now.getMonth()]+'</p><h1>Ta journée</h1><p class="mut">'+n+" sur 5 faites. Un jour compte à partir de 3.</p>";
+var h=installBox()+'<p class="mut">'+dn+" "+now.getDate()+" "+["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"][now.getMonth()]+'</p><h1>Ta journée</h1><p class="mut">'+n+" sur 5 faites. Un jour compte à partir de 3.</p>";
 h+='<div class="bar"><i style="width:'+n*20+'%"></i></div><div class="card">';
 R.forEach(function(r,i){h+=row(r,a[i],"tr("+i+")")});
 h+='</div><div class="week">'+w+'</div><p class="mut">Série en cours : <b>'+streak()+" jour"+(streak()>1?"s":"")+"</b></p>";
@@ -124,6 +124,17 @@ function render(){
 document.getElementById("v").innerHTML=tab==="j"?vJour():tab==="o"?vObj():vStat();
 document.querySelectorAll("nav button").forEach(function(b){b.className=b.getAttribute("data-t")===tab?"on":""});
 window.scrollTo(0,0)}
+var dp=null;
+window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();dp=e;if(tab==="j")render()});
+window.addEventListener("appinstalled",function(){dp=null;render()});
+function isApp(){return window.matchMedia("(display-mode: standalone)").matches||navigator.standalone===true}
+function installBox(){
+if(isApp())return"";
+var s='<div class="card" style="margin-bottom:16px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:12px">';
+if(dp)return s+'<span>Installer le tracker sur ton téléphone</span><button class="chip on" onclick="doInst()">Installer</button></div>';
+if(/iphone|ipad|ipod/i.test(navigator.userAgent))return s+'<span class="mut">Pour installer : touche Partager, puis « Sur l’écran d’accueil ».</span></div>';
+return""}
+function doInst(){if(!dp)return;dp.prompt();dp.userChoice.then(function(){dp=null;render()})}
 render();
 if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){})})}
 </script>
