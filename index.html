@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<meta name="description" content="Tracker d’objectifs et de routine, décembre 2026 à décembre 2027">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icons/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Tracker">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Tracker 2026–2027</title>
+<style>
+:root{--bg:#000;--card:#0c0c0e;--ink:#f2f3f5;--mut:#8b919c;--line:#232427;--acc:#7b97ff;--accsoft:#14182b;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{background:#000;scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.45;padding-bottom:84px}
+main{max-width:560px;margin:0 auto;padding:20px 18px}
+h1{font-size:26px;line-height:1.15;margin:4px 0 2px;font-weight:700;letter-spacing:-.02em}
+h2{font-size:15px;margin:26px 0 8px;font-weight:700}
+.mut{color:var(--mut);font-size:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:6px 14px}
+.row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);cursor:pointer;font-size:16px;-webkit-tap-highlight-color:transparent}
+.row:last-child{border-bottom:0}
+.row input{appearance:none;-webkit-appearance:none;width:22px;height:22px;border:2px solid var(--line);border-radius:6px;flex:none;margin:0;display:grid;place-content:center;background:var(--card)}
+.row input:checked{background:var(--acc);border-color:var(--acc)}
+.row input:checked::after{content:"";width:6px;height:11px;border:solid #000;border-width:0 2px 2px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.row.done span{color:var(--mut);text-decoration:line-through}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:8px 0}
+.bar i{display:block;height:100%;background:var(--acc);border-radius:3px;transition:width .25s}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:4px 0 10px;margin:0 -18px;padding-left:18px;padding-right:18px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:20px;padding:7px 13px;font:inherit;font-size:14px}
+.chip.on{background:var(--acc);border-color:var(--acc);color:#000;font-weight:700}
+.week{display:flex;justify-content:space-between;margin:10px 0 4px}
+.day{text-align:center;font-size:12px;color:var(--mut);flex:1}
+.dot{width:26px;height:26px;border-radius:50%;margin:5px auto 0;border:2px solid var(--line);display:grid;place-content:center;font-size:12px;color:var(--mut)}
+.dot.ok{background:var(--acc);border-color:var(--acc);color:#000}
+.dot.now{border-color:var(--acc)}
+.big{font-size:40px;font-weight:700;letter-spacing:-.03em;line-height:1}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
+.mrow{display:flex;justify-content:space-between;font-size:14px;margin-top:12px}
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:var(--card);border-top:1px solid var(--line);padding:6px 8px calc(8px + env(safe-area-inset-bottom,0px))}
+nav button{flex:1;background:none;border:0;color:var(--mut);font:inherit;font-size:14px;padding:10px 4px;border-radius:8px}
+nav button.on{color:var(--acc);font-weight:700}
+button:focus-visible,.row:focus-within{outline:2px solid var(--acc);outline-offset:2px}
+</style>
+</head>
+<body>
+<main id="v"></main>
+<nav>
+<button data-t="j" onclick="go('j')">Aujourd’hui</button>
+<button data-t="o" onclick="go('o')">Objectifs</button>
+<button data-t="s" onclick="go('s')">Statistiques</button>
+</nav>
+<script>
+var R=["Réveil tôt","Sport ou marche","Lecture (20 pages)","SALKA GROUP","Apprentissage"];
+var M=[
+["2026-12","Décembre 2026","Reprendre les habitudes","Routine du matin tenue au moins 25 jours sur 31",[["Certification","Google IA Essentials"],["Livre","Atomic Habits"],["Livre","Miracle Morning"],["Défi","Réveil à 5h en progressif (6h, 5h30, 5h)"],["Défi","7 jours sans réseaux sociaux"],["Défi","Marche de 20 à 30 km"],["Documentaire","Sommeil : l’heure du réveil idéal"]]],
+["2027-01","Janvier 2027","Discipline et productivité","Un système de planification utilisé tous les jours",[["Compétence","Gestion du temps"],["Compétence","Gestion de projet (méthodes agiles légères)"],["Compétence","Bureautique de base"],["Livre","L’ego est l’ennemi"],["Livre","The One Thing"],["Livre","L’effet cumulé"],["Défi","21 jours sans sucre"],["Documentaire","Faut-il échouer pour réussir"]]],
+["2027-02","Février 2027","IA et agents personnalisés","1 agent IA personnalisé qui fonctionne",[["Certification","Microsoft AI Fundamentals"],["Certification","Git/GitHub Foundations"],["Compétence","Créer un agent IA personnalisé"],["Sujet","Le fonctionnement d’internet"],["Défi","24h sans téléphone"]]],
+["2027-03","Mars 2027","Automatisation","3 workflows n8n ou Make utilisés pour de vrai",[["Compétence","3 workflows n8n ou Make en service"],["Compétence","Un projet avec Claude Code"],["Compétence","Bases de cybersécurité web"],["Défi","7 jours d’entraînement sans musique"],["Livre","La chirurgienne"]]],
+["2027-04","Avril 2027","Design et création de contenu","Une identité visuelle complète et 10 contenus publiés",[["Compétence","Canva"],["Compétence","Figma"],["Compétence","Montage vidéo"],["Compétence","10 contenus publiés (SALKA ou Sama Skill)"],["Autre","Cours de design sur LinkedIn Learning"],["Défi","24h sans parler"]]],
+["2027-05","Mai 2027","Marketing digital","Une campagne complète menée de A à Z",[["Certification","Google Digital Garage"],["Certification","HubSpot : Inbound Marketing"],["Certification","HubSpot : Content Marketing"],["Certification","Meta Blueprint"],["Compétence","SEO"],["Compétence","Copywriting"],["Compétence","Google Analytics"],["Défi","Jeûne de 24h"]]],
+["2027-06","Juin 2027","Finance et comptabilité","Un modèle financier simple dans Excel",[["Certification","CFI (finance et comptabilité)"],["Certification","Coursera : Financial Markets"],["Compétence","Analyse financière"],["Compétence","Excel / Google Sheets avancé"],["Sujet","Les ETF"],["Défi","Lire un livre en 1 jour"],["Livre","Le boyfriend"]]],
+["2027-07","Juillet 2027","Business plan et lancement SaaS","Un business plan complet et un projet lancé",[["Compétence","Business plan complet"],["Autre","Lancer ou relancer un projet SaaS / Sama Skill"],["Livre","Père riche père pauvre"],["Livre","Happy Sexy Millionnaire"],["Défi","30 jours sans café"],["Autre","Podcasts : GDIY et Le Podcast de l’Investisseur"]]],
+["2027-08","Août 2027","Vente, négociation, leadership","Un script de vente testé avec de vrais prospects",[["Compétence","La vente"],["Compétence","Communication (s’exprimer)"],["Compétence","Négociation"],["Compétence","Leadership"],["Livre","Ne coupez jamais la poire en deux"],["Livre","Ne cède jamais"],["Livre","Comment se faire des amis et influencer les autres"],["Défi","Réveil à 5h pendant 30 jours"]]],
+["2027-09","Septembre 2027","Monnaie et économie africaine","Une fiche de synthèse par sujet",[["Sujet","Le fonctionnement des banques centrales"],["Sujet","Le Bitcoin"],["Sujet","Histoire économique de l’Afrique de l’Ouest (UEMOA, zone CFA)"],["Sujet","Paiements mobiles (Wave, Orange Money, M-Pesa)"],["Livre","Une voisine encombrante"],["Défi","Refaire le défi le plus dur de l’année"]]],
+["2027-10","Octobre 2027","Psychologie et décision","5 biais cognitifs repérés dans tes propres décisions",[["Sujet","Les biais cognitifs"],["Sujet","La théorie des jeux"],["Sujet","Économie comportementale (Kahneman, Thaler)"],["Livre","Les 365 lois"],["Défi","Un défi de ton choix"]]],
+["2027-11","Novembre 2027","Droit, histoire, géopolitique","Une note de synthèse par sujet",[["Sujet","Droit des affaires OHADA"],["Sujet","Histoire du Sénégal post-indépendance"],["Livre","L’ordre mondial en mutation"],["Défi","Un défi de ton choix"]]],
+["2027-12","Décembre 2027","Bilan et plan 2028","Un bilan chiffré de l’année",[["Autre","Bilan chiffré de l’année"],["Autre","Nouvelle liste d’objectifs 2028"]]]
+];
+var S={d:{},r:{}};
+try{var p=JSON.parse(localStorage.getItem("trk27")||"null");if(p&&p.d&&p.r)S=p}catch(e){}
+function save(){try{localStorage.setItem("trk27",JSON.stringify(S))}catch(e){}}
+function dk(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+var now=new Date(),cm=M.findIndex(function(m){return m[0]===dk(now).slice(0,7)});
+if(cm<0)cm=dk(now)<"2026-12"?0:M.length-1;
+var tab="j",sel=cm;
+function ok(k){return(S.r[k]||[]).filter(Boolean).length>=3}
+function streak(){var d=new Date();if(!ok(dk(d)))d.setDate(d.getDate()-1);var n=0;while(ok(dk(d))){n++;d.setDate(d.getDate()-1)}return n}
+function best(){var ks=Object.keys(S.r).filter(ok).sort(),b=0,c=0,prev=null;ks.forEach(function(k){var t=new Date(k+"T12:00:00");if(prev&&Math.round((t-prev)/864e5)===1)c++;else c=1;if(c>b)b=c;prev=t});return b}
+function mp(i){var it=M[i][4],n=0;it.forEach(function(_,j){if(S.d[i+"-"+j])n++});return[n,it.length]}
+function pc(a){return a[1]?Math.round(a[0]/a[1]*100):0}
+function go(t){tab=t;render()}
+function tr(i){var k=dk(new Date());var a=S.r[k]||[0,0,0,0,0];a[i]=!a[i];S.r[k]=a;save();render()}
+function ti(i,j){var k=i+"-"+j;S.d[k]=!S.d[k];save();render()}
+function sm(i){sel=i;render()}
+function row(label,on,fn){return'<label class="row'+(on?" done":"")+'"><input type="checkbox" '+(on?"checked":"")+' onchange="'+fn+'"><span>'+label+'</span></label>'}
+function vJour(){
+var k=dk(now),a=S.r[k]||[],m=M[cm],w="",n=a.filter(Boolean).length;
+for(var i=6;i>=0;i--){var d=new Date();d.setDate(d.getDate()-i);var c=(S.r[dk(d)]||[]).filter(Boolean).length;
+w+='<div class="day">'+"dlmmjvs".charAt(d.getDay()===0?0:d.getDay())+'<div class="dot'+(ok(dk(d))?" ok":"")+(i===0?" now":"")+'">'+(c||"")+'</div></div>'}
+var dn=["dimanche","lundi","mardi","mercredi","jeudi","vendredi","samedi"][now.getDay()];
+var h='<p class="mut">'+dn+" "+now.getDate()+" "+["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"][now.getMonth()]+'</p><h1>Ta journée</h1><p class="mut">'+n+" sur 5 faites. Un jour compte à partir de 3.</p>";
+h+='<div class="bar"><i style="width:'+n*20+'%"></i></div><div class="card">';
+R.forEach(function(r,i){h+=row(r,a[i],"tr("+i+")")});
+h+='</div><div class="week">'+w+'</div><p class="mut">Série en cours : <b>'+streak()+" jour"+(streak()>1?"s":"")+"</b></p>";
+h+='<h2>Thème du mois : '+m[2]+'</h2><p class="mut">'+m[3]+'.</p>';
+return h}
+function vObj(){
+var h='<h1>Objectifs</h1><div class="chips">';
+M.forEach(function(m,i){h+='<button class="chip'+(i===sel?" on":"")+'" onclick="sm('+i+')">'+m[1].replace(" 20"," ’").replace("’26","’26")+'</button>'});
+var m=M[sel],p=mp(sel);
+h+='</div><h2 style="margin-top:6px">'+m[2]+'</h2><p class="mut">Résultat visé : '+m[3]+'.</p><div class="bar"><i style="width:'+pc(p)+'%"></i></div><p class="mut">'+p[0]+" sur "+p[1]+" ("+pc(p)+" %)</p>";
+var types=[];m[4].forEach(function(x){if(types.indexOf(x[0])<0)types.push(x[0])});
+types.forEach(function(t){h+='<h2>'+t+'</h2><div class="card">';m[4].forEach(function(x,j){if(x[0]===t)h+=row(x[1],S.d[sel+"-"+j],"ti("+sel+","+j+")")});h+='</div>'});
+return h}
+function vStat(){
+var T=0,D=0;M.forEach(function(_,i){var p=mp(i);T+=p[1];D+=p[0]});
+var days=Object.keys(S.r).filter(ok).length;
+var h='<h1>Statistiques</h1><div class="grid"><div class="stat"><div class="big">'+(T?Math.round(D/T*100):0)+'<small style="font-size:18px"> %</small></div><div class="mut">objectifs faits ('+D+" sur "+T+')</div></div>';
+h+='<div class="stat"><div class="big">'+streak()+'</div><div class="mut">jours d’affilée</div></div>';
+h+='<div class="stat"><div class="big">'+days+'</div><div class="mut">jours validés</div></div>';
+h+='<div class="stat"><div class="big">'+best()+'</div><div class="mut">meilleure série</div></div></div><h2>Par mois</h2><div class="card" style="padding-bottom:14px">';
+M.forEach(function(m,i){var p=mp(i),v=Object.keys(S.r).filter(function(k){return k.slice(0,7)===m[0]&&ok(k)}).length;
+h+='<div class="mrow"><span>'+m[1]+'</span><span class="mut">'+p[0]+"/"+p[1]+" · "+v+' j validés</span></div><div class="bar"><i style="width:'+pc(p)+'%"></i></div>'});
+return h+"</div>"}
+function render(){
+document.getElementById("v").innerHTML=tab==="j"?vJour():tab==="o"?vObj():vStat();
+document.querySelectorAll("nav button").forEach(function(b){b.className=b.getAttribute("data-t")===tab?"on":""});
+window.scrollTo(0,0)}
+render();
+if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){})})}
+</script>
+</body>
+</html>
