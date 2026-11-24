@@ -1,10 +1,12 @@
 {
   "name": "Tracker d’objectifs 2026–2027",
+  "id": "/",
   "short_name": "Tracker",
   "description": "Routine quotidienne et objectifs mensuels, décembre 2026 à décembre 2027",
   "lang": "fr",
   "start_url": "/",
   "scope": "/",
+  "prefer_related_applications": false,
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#000000",

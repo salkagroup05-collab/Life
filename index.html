@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#000000">
 <meta name="description" content="Tracker d’objectifs et de routine, décembre 2026 à décembre 2027">
-<link rel="manifest" href="/manifest.webmanifest">
+<link rel="manifest" href="/manifest.webmanifest" crossorigin="use-credentials">
 <link rel="icon" href="/icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -119,11 +119,11 @@ h+='<div class="stat"><div class="big">'+days+'</div><div class="mut">jours vali
 h+='<div class="stat"><div class="big">'+best()+'</div><div class="mut">meilleure série</div></div></div><h2>Par mois</h2><div class="card" style="padding-bottom:14px">';
 M.forEach(function(m,i){var p=mp(i),v=Object.keys(S.r).filter(function(k){return k.slice(0,7)===m[0]&&ok(k)}).length;
 h+='<div class="mrow"><span>'+m[1]+'</span><span class="mut">'+p[0]+"/"+p[1]+" · "+v+' j validés</span></div><div class="bar"><i style="width:'+pc(p)+'%"></i></div>'});
-return h+"</div>"}
+return h+'</div><h2>Installation</h2><div class="card" id="dg" style="padding:8px 14px"><span class="mut">Vérification…</span></div>'}
 function render(){
 document.getElementById("v").innerHTML=tab==="j"?vJour():tab==="o"?vObj():vStat();
 document.querySelectorAll("nav button").forEach(function(b){b.className=b.getAttribute("data-t")===tab?"on":""});
-window.scrollTo(0,0)}
+window.scrollTo(0,0);if(tab==="s")runDiag()}
 var dp=null;
 window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();dp=e;if(tab==="j")render()});
 window.addEventListener("appinstalled",function(){dp=null;render()});
@@ -134,6 +134,14 @@ var s='<div class="card" style="margin-bottom:16px;padding:12px 14px;display:fle
 if(dp)return s+'<span>Installer le tracker sur ton téléphone</span><button class="chip on" onclick="doInst()">Installer</button></div>';
 if(/iphone|ipad|ipod/i.test(navigator.userAgent))return s+'<span class="mut">Pour installer : touche Partager, puis « Sur l’écran d’accueil ».</span></div>';
 return""}
+function runDiag(){
+var el=document.getElementById("dg");if(!el)return;
+var sw=("serviceWorker" in navigator)?navigator.serviceWorker.getRegistration().then(function(r){return r?(r.active?"actif":"en cours"):"absent"}).catch(function(){return"erreur"}):Promise.resolve("non pris en charge");
+var mf=fetch("/manifest.webmanifest",{credentials:"include"}).then(function(r){return r.ok?"OK":"erreur "+r.status}).catch(function(){return"erreur"});
+var ic=fetch("/icons/icon-512.png").then(function(r){return r.ok?"OK":"erreur "+r.status}).catch(function(){return"erreur"});
+Promise.all([sw,mf,ic]).then(function(v){
+var rows=[["Adresse sécurisée (HTTPS)",location.protocol==="https:"?"oui":"non"],["Service worker",v[0]],["Manifest",v[1]],["Icône 512",v[2]],["Déjà en mode application",isApp()?"oui":"non"],["Bouton d’installation du navigateur",dp?"disponible":"pas encore reçu"]];
+el.innerHTML=rows.map(function(r){return'<div class="mrow" style="margin:8px 0"><span>'+r[0]+'</span><span class="mut">'+r[1]+'</span></div>'}).join("")})}
 function doInst(){if(!dp)return;dp.prompt();dp.userChoice.then(function(){dp=null;render()})}
 render();
 if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){})})}
